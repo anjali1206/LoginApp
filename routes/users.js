@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router(); //setting up express router
-var passport = require('passport');
-var LocalStrategy =require('passport-local').Strategy;
+var passport = require('passport'); //importing passport module for authentication
+var LocalStrategy =require('passport-local').Strategy; //importing passport-local, as I'm using it for local db
 
-var User = require('../models/user');
+var User = require('../models/user'); //importing user model
 
 
 // Register route - '/register' is just the register route
@@ -70,17 +70,19 @@ router.post('/register', function(req, res){
 //everything's gonna come from the local strategy which will be like this. //code is taken from http://passportjs.org/docs/username-password
 passport.use(new LocalStrategy(
   function(username, password, done) {
+  	//instead of mongo's findOne query funtion, I have defined getUserByUsername funtion in user model & called it here.
     User.getUserByUsername(username, function(err, user){
-    	if(err) throw err;
-		if(!user){
-			return done(null, false, {message: 'Invalid User'});
+    	if(err) throw err;		//check for error
+		if(!user){	//if not then check if its not user then returndone & show err msg
+			return done(null, false, {message: 'Invalid Username.'});
 		}
 
+		//if there is a user match then keep going ro compare passwords
 		User.comparePassword(password, user.password, function(err, isMatch){
-			if(err) throw err;
-			if(isMatch){
-				return done(null, user);
-			} else {
+			if(err) throw err;	///check for the err
+			if(isMatch){		//check for the match
+				return done(null, user);	//if match then retur done
+			} else {	//else return done & show err msg
 				return done(null, false, {message: 'Invalid password'});
 			}
 		});
@@ -88,6 +90,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
+//code taken from http://passportjs.org/docs/username-password for serializeUser & deserializeUser
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -106,12 +109,13 @@ router.post('/login',					//post req.to /login url -code is taken from http://pa
     res.redirect('/'); //redirect user to the dashboard page
 });
 
+//logout route - logout url with success msg & then redirect to login page.
 router.get('/logout', function(req, res){
-	req.logout();
+	req.logout();	//logout the user
 
-	req.flash('success_msg', 'You logged out.');
+	req.flash('success_msg', 'You are logged out.');	//show the success msg
 
-	res.redirect('/users/login');
+	res.redirect('/users/login');	//redirect to login page.
 });
 
 module.exports = router; //exporting the router module

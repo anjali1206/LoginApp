@@ -35,21 +35,24 @@ module.exports.createUser = function(newUser, callback){
 	});
 }
 
+//getUserByUsername function to validate username
 module.exports.getUserByUsername = function(username, callback){
-	var query = {username: username};
-	User.findOne(query, callback);
+	var query = {username: username};	//query for username to match username entered for login
+	User.findOne(query, callback);	//find that username query & return callback
 }
 
-//getUserById
-module.exports.getUserById = function(id, callback){
-	User.findById(id, callback);
+//getUserById function to use in deserializeUser function in users.js
+module.exports.getUserById = function(id, callback){ //it will take in id
+	User.findById(id, callback); //to get user by id & callback
 }
 
+//comparePassword function to validate password
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	// Load hash from your password DB. 
+	//grab the bcrypt code from https://www.npmjs.com/package/bcryptjs under usage - Async - To check password
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    	if(err) throw err;
-    	callback(null, isMatch);
+    	if(err) throw err;			//if error throw error
+    	callback(null, isMatch);	//callback null and isMatch
 	});
 }
 
