@@ -18,6 +18,12 @@ router.get('/login', function(req, res){
 	res.render('login'); //rendering view called login
 });
 
+// edit route
+router.get('/edit', function(req, res){ 
+	console.log("edit form loaded...")
+	res.render('edit'); //rendering view called register
+});
+
 ///////////////////// Register user - (Create user logic) ////////////////////////////
 router.post('/register', function(req, res){ 
 	//declare all the variables, to store the user info.from register form.
@@ -69,6 +75,7 @@ router.post('/register', function(req, res){
 
 });
 
+/////////////////Logic for login with passport authentication.////////////////////
 //everything's gonna come from the local strategy which will be like this. //code is taken from http://passportjs.org/docs/username-password
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -98,7 +105,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
+  User.getUserById(id, function(err, user) {	//getUserById function created in user.js(user model) file
     done(err, user);
   });
 });
@@ -121,6 +128,13 @@ router.get('/logout', function(req, res){
 
 	res.redirect('/users/login');	//redirect to login page.
 });
+
+///////////////////// editUser user - (Update userInfo logic) ////////////////////////////
+router.put('/edit', function(req, res){
+
+});
+
+
 
 module.exports = router; //exporting the router module
 

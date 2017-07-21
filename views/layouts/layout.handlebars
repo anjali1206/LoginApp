@@ -17,6 +17,7 @@
             <!-- if user logged in, then just show dashboard and logout tabs-->
             {{#if user}}
             <li role="presentation"><a href="/">Dashboard</a></li>
+            <li role="presentation"><a href="/users/edit">Update Profile</a></li>
             <li role="presentation"><a href="/users/logout">Logout</a></li>
             <!-- else show dashboard create acc. & log in tabs-->
             {{else}}
@@ -44,7 +45,7 @@
         		<div class="alert alert-danger">{{error}}</div>
         	{{/if}}
 
-           	{{{body}}}  <!--express handlebars to show views  -->
+          {{{body}}}  <!--express handlebars to show views  -->
         </div>
 
        </div>

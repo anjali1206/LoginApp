@@ -22,7 +22,7 @@ var UserSchema = mongoose.Schema({
 //create var that can be accessed outside this file
 var User = module.exports = mongoose.model('User', UserSchema); //model name =User & user schema variable = USerSchema.
 
-//define & export createUser function for new user
+//////////// createUser function for new user - define & export /////////////
 module.exports.createUser = function(newUser, callback){
 	//need to user bcrypt to hash the password - 
 	//get the code (& change it as required) from https://www.npmjs.com/package/bcryptjs under Usage - Async
@@ -49,12 +49,12 @@ module.exports.getUserById = function(id, callback){ //it will take in id
 //comparePassword function to validate password
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	// Load hash from your password DB. 
-	//grab the bcrypt code from https://www.npmjs.com/package/bcryptjs under usage - Async - To check password
+	// grab the bcrypt code from https://www.npmjs.com/package/bcryptjs under usage - Async - To check password
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     	if(err) throw err;			//if error throw error
     	callback(null, isMatch);	//callback null and isMatch
 	});
 }
 
-
-
+//////////// editUser function for existing user - define & export /////////////
+module.exports.editUser = function()
