@@ -10,9 +10,11 @@ router.get('/',  ensureAuthenticated, function(req, res){
 //ensureAuthenticated function to check if user is logged in then only allow them to go to dashboard else show err msg & redirec to login page.
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){ //if user req. is authenticated, then allow to keep going.
+		console.log("user logged in...")
 		return next();
 	} else {	//else show err msg & redirect to login page.
 		//req.flash('error_msg', 'You are not logged in.');	//this msg is showing all the time on browser. so commented it.
+		console.log("Error in user log-in...")
 		res.redirect('/users/login');
 	}
 }

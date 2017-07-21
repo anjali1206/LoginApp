@@ -8,11 +8,13 @@ var User = require('../models/user'); //importing user model
 
 // Register route - '/register' is just the register route
 router.get('/register', function(req, res){ 
+	console.log("register form loaded...")
 	res.render('register'); //rendering view called register
 });
 
 // login route
 router.get('/login', function(req, res){ 
+	console.log("login form loaded...")
 	res.render('login'); //rendering view called login
 });
 
@@ -51,7 +53,7 @@ router.post('/register', function(req, res){
 			password: password
 		});
 
-		//call that create User function in the model user.js
+		//call the create User function from the model user.js
 		User.createUser(newUser, function(err, user){
 			//check for the err then throw the err
 			if(err) throw err;
@@ -111,6 +113,8 @@ router.post('/login',					//post req.to /login url -code is taken from http://pa
 
 //logout route - logout url with success msg & then redirect to login page.
 router.get('/logout', function(req, res){
+	console.log("user logged out...")
+	
 	req.logout();	//logout the user
 
 	req.flash('success_msg', 'You are logged out.');	//show the success msg
